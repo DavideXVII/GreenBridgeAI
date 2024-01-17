@@ -88,18 +88,18 @@ def generate_prodotto():
 
     return prodotto_data
 
-num_agricoltori=2
+num_agricoltori=200
+id=1
 
 for _ in range(num_agricoltori):
-    portafoglio_data=generate_portafoglio()
-    agricoltore_data=generate_agricoltore()
+    # portafoglio_data=generate_portafoglio()
+    # agricoltore_data=generate_agricoltore()
     certificato_data=generate_certificato()
-    prodotto_data=generate_prodotto()
+    # prodotto_data=generate_prodotto()
 
-    print("INSERT INTO portafoglio (credito) VALUES({});".format(portafoglio_data['credito']))
-    print("""SET @portafoglio_id=LAST_INSERT_ID();""")
-    print("""INSERT INTO agricoltore (nome, email, pwd, nome_bottega, indirizzo_bottega, id_portafoglio) VALUES (\""""+agricoltore_data['nome']+"""\", \""""+agricoltore_data['email']+"""\", \""""+agricoltore_data['pwd']+"""\", \""""+agricoltore_data['nome_bottega']+"""\", \""""+agricoltore_data['indirizzo_bottega']+"""\", @portafoglio_id);""")
-    print("""SET @agricoltore_id=LAST_INSERT_ID();""")
-    print("""INSERT INTO certificato (nome, data_scadenza, scansione, id_agricoltore) VALUES (\""""+certificato_data['nome']+"""\", \"{}\", \"{}\", @agricoltore_id);""".format(certificato_data['data_scadenza'].strftime('%d-%m-%Y'), certificato_data['scansione']))
-    print("""SET @agricoltore_id=LAST_INSERT_ID();""")
-    print("""INSERT INTO prodotto (nome, origine, prezzo_kg, prezzo_vendita, quantita_disp, id_agricoltore) VALUES (\""""+prodotto_data['nome']+"""\", "Italia", {}, {}, {}, @agricoltore_id);""".format(prodotto_data['prezzo_kg'], prodotto_data['prezzo_vendita'], prodotto_data['quantita_disp']))
+
+    # print("INSERT INTO portafoglio (credito) VALUES({});".format(portafoglio_data['credito']))
+    # print("""INSERT INTO agricoltore (nome, email, pwd, nome_bottega, indirizzo_bottega, id_portafoglio) VALUES (\""""+agricoltore_data['nome']+"""\", \""""+agricoltore_data['email']+"""\", \""""+agricoltore_data['pwd']+"""\", \""""+agricoltore_data['nome_bottega']+"""\", \""""+agricoltore_data['indirizzo_bottega']+"""\", {});""". format(id_portafoglio))
+    print("""INSERT INTO certificato (nome, data_scadenza, scansione, id_agricoltore, id_admin) VALUES (\""""+certificato_data['nome']+"""\", \"{}\", \"{}\", {}, 1);""".format(certificato_data['data_scadenza'].strftime('%Y-%m-%d'), certificato_data['scansione'], id))
+    id+=1
+    # print("""INSERT INTO prodotto (nome, origine, prezzo_kg, prezzo_vendita, quantita_disp, id_agricoltore) VALUES (\""""+prodotto_data['nome']+"""\", "Italia", {}, {}, {}, @agricoltore_id);""".format(prodotto_data['prezzo_kg'], prodotto_data['prezzo_vendita'], prodotto_data['quantita_disp']))
