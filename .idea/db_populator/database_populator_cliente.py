@@ -27,4 +27,4 @@ num_clienti=2
 for _ in range(num_clienti):
     cliente_data=generate_cliente()
 
-    print(f"INSERT INTO cliente (nome, cognome, pwd, data_nascita, email) VALUES ('{cliente_data['nome']}', '{cliente_data['cognome']}', '{cliente_data['pwd']}', '{cliente_data['data_nascita'].strftime('%d-%m-%Y')}', '{cliente_data['email']}');")
+    print(f"INSERT INTO cliente (nome, cognome, pwd, data_nascita, email) VALUES ('{cliente_data['nome']}', '{cliente_data['cognome']}', '{cliente_data['pwd']}', '{cliente_data['data_nascita'].strftime('%Y-%m-%d')}', '{cliente_data['email']}');")
