@@ -27,14 +27,15 @@ def calcolamediaRecensioniAgr(agricoltore_id):
 
     query = "SELECT AVG(voto) FROM recensione_agricoltore WHERE id_agricoltore = %s"
     cursor.execute(query, (agricoltore_id,))
-    media = cursor.fetchone()[0]
+    media = float(cursor.fetchone()[0])
     return media
 
 def calcolamediaRecensioniPro(agricoltore_id):
 
     query = "SELECT AVG(rp.voto) AS media_recensioni FROM recensione_prodotti rp INNER JOIN prodotto p ON rp.id_prodotto = p.id INNER JOIN agricoltore a ON p.id_agricoltore = a.id WHERE a.id = %s;"
     cursor.execute(query, (agricoltore_id,))
-    media = cursor.fetchone() [0]
+    media = float(cursor.fetchone() [0])
+
     return media
 
 def getNumAgricoltori():

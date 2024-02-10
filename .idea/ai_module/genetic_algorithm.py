@@ -1,17 +1,53 @@
 from data_manipulator import *
+import pygad
 
+# Definizione della funzione di fitness
+def fitness_func(ga_instance, solution, solution_idx):
+    MA = solution[0]
+    MP = solution[1]
+    NC = solution[2]
+    OR = solution[3]
+    fitness = (2 * OR) + (1.5 * NC) + (2 * MA) + (1.5 * MP)
+    return fitness
 
 def main():
 
     #creazione array di agricoltori
     numAgricoltori = getNumAgricoltori()
     agricoltori = []
-    for agricoltore_id in range(1, numAgricoltori[0] + 1):
+    for agricoltore_id in range (1,9): #(1, numAgricoltori[0] + 1):
         nuovoagricoltore = Agricoltore(agricoltore_id)
         agricoltori.append(nuovoagricoltore)
     for agricoltore in agricoltori:
-        print(f"id: {agricoltore.id}, numOrdini: {agricoltore.numOrdini}, numCertificati: {agricoltore.numCertificati}, mediaRecensioni: {agricoltore.mediaRecensioniPro}")
+        print(f"id: {agricoltore.id}, numOrdini: {agricoltore.numOrdini}, numCertificati: {agricoltore.numCertificati},"
+              f" mediaRecensioniPro: {agricoltore.mediaRecensioniPro}, mediaRecensioniAgr: {agricoltore.mediaRecensioniAgr}")
+    ga_data = []
+    for agricoltore in agricoltori:
+        dati = [agricoltore.numOrdini, agricoltore.numCertificati, agricoltore.mediaRecensioniAgr, agricoltore.mediaRecensioniPro]
+        ga_data.append(dati)
+    num_individuals = 9 #numAgricoltori[0]
+    num_genes = 4
+    sol_per_pop = (num_individuals, num_genes)
+    # Creazione di un oggetto PyGAD per l'ottimizzazione
+    ga_instance = pygad.GA(num_generations=100,
+                           num_parents_mating=5,
+                           fitness_func=fitness_func,
+                           sol_per_pop=num_individuals,
+                           num_genes=num_genes,
+                           initial_population=ga_data,
+                           mutation_percent_genes=50)
 
+    # Avvio dell'ottimizzazione
+    ga_instance.run()
+
+    # Ottieni il miglior individuo dopo l'ottimizzazione
+    solution, solution_fitness, solution_idx = ga_instance.best_solution()
+    print("Miglior soluzione:", solution)
+    print("Fitness della migliore soluzione:", solution_fitness)
+    print("solution index:", solution_idx)
+
+
+"""
     ordini_agricoltore = []
     for i in range(numAgricoltori[0]):
         temp = agricoltori[i].numOrdini
@@ -36,7 +72,7 @@ def main():
         media_recensioni_pro.append(temp)
     print("media recensioni prodotti: ", media_recensioni_pro)
 
-
+"""
 
 if __name__ == "__main__":
     main()
