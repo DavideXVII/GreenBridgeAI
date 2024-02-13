@@ -2,7 +2,6 @@ from data_manipulator import *
 import pygad
 import numpy
 
-
 # Definizione della funzione di fitness
 def fitness_func_wrapper(agricoltori):
     def fitness_func(ga_instance, solution, solution_idx):
@@ -38,12 +37,13 @@ def main():
                            sol_per_pop=100,
                            num_genes=num_genes,
                            initial_population=ga_data,
-                           mutation_probability=0.5, #0.4 troppo poco, 0.6 troppo
+                           parent_selection_type = "sss",
+                           mutation_probability=0.4, #0.3 troppo poco, 0.5 troppo
                            mutation_type = "random",
-                           crossover_type="single_point",
+                           crossover_type="two_points",
                            keep_elitism = 1,
                            gene_type = int,
-                           stop_criteria=["reach_122", "saturate_15"],
+                           stop_criteria=["saturate_5"],
                            allow_duplicate_genes=False,
                            )
 
