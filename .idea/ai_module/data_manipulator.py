@@ -3,7 +3,7 @@ import mysql.connector
 conn = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='password',
+    password='8872.Giov',
     database='greenbridgedb'
 )
 
@@ -41,14 +41,17 @@ def calcolamediaRecensioniPro(agricoltore_id):
 def getNumAgricoltori():
     query = "SELECT COUNT(*) FROM agricoltore"
     cursor.execute(query)
-    num_agricoltori = cursor.fetchone()
+    num_agricoltori = cursor.fetchone() [0]
     return num_agricoltori
 
+def getFitness(id):
+    return Agricoltore(id).fitness
 
 class Agricoltore:
     def __init__(self, agricoltore_id):
         self.id = agricoltore_id
-        self.numOrdini = calcolanumOrdini(agricoltore_id)
-        self.numCertificati = calcolanumCertificati(agricoltore_id)
-        self.mediaRecensioniAgr = calcolamediaRecensioniAgr(agricoltore_id)
-        self.mediaRecensioniPro = calcolamediaRecensioniPro(agricoltore_id)
+        self.fitness = ((1.5*calcolanumOrdini(agricoltore_id)) +
+                        (2*calcolanumCertificati(agricoltore_id)) +
+                        (2*calcolamediaRecensioniAgr(agricoltore_id)) +
+                        (1.5*calcolamediaRecensioniPro(agricoltore_id))
+                        )
