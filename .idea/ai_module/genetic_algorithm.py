@@ -40,7 +40,7 @@ def main():
                            crossover_type="two_points",
                            keep_elitism = 1,
                            gene_type = int,
-                           stop_criteria=["saturate_5"], #L'algoritmo si ferma se la fitness non cambia per 5 generazioni consecutive
+                           stop_criteria=["saturate_4"], #L'algoritmo si ferma se la fitness non cambia per 5 generazioni consecutive
                            allow_duplicate_genes=False, #Geni duplicati non ammessi
                            suppress_warnings = True,
                            )
