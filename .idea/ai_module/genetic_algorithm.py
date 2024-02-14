@@ -16,23 +16,21 @@ def fitness_func_wrapper(agricoltori):
     return fitness_func
 
 def main():
+    #nomeProdotto = "Peperoni"
     #creazione array di agricoltori
-    nomeProdotto = "Radicchio"
     numAgricoltori = getNumAgricoltori()
     agricoltori = []
     for agricoltore_id in range (1, numAgricoltori + 1):
-        nuovoagricoltore = Agricoltore(agricoltore_id, nomeProdotto)
+        nuovoagricoltore = Agricoltore(agricoltore_id)#, nomeProdotto)
         agricoltori.append(nuovoagricoltore)
-    for agricoltore in agricoltori:
-        print(f"id: {agricoltore.id}, fitness: {agricoltore.fitness}")
     # Creazione della popolazione iniziale
     population_size = numAgricoltori
     ids = list(range(0, numAgricoltori))  # Genera una lista di numeri da 1 a 200
     ga_data = [ids[i:i+4] for i in range(0, len(ids), 4)] #Gli ID vengono inseriti 4 alla volta
     num_genes = 4
     # Creazione di un oggetto PyGAD
-    ga_instance = pygad.GA(num_generations=20,
-                           num_parents_mating=5,
+    ga_instance = pygad.GA(num_generations=15,
+                           num_parents_mating=10,
                            fitness_func=fitness_func_wrapper(agricoltori=agricoltori),
                            num_genes=num_genes,
                            initial_population=ga_data,
@@ -42,8 +40,9 @@ def main():
                            crossover_type="two_points",
                            keep_elitism = 1,
                            gene_type = int,
-                           stop_criteria=["saturate_3"], #L'algoritmo si ferma se la fitness non cambia per 5 generazioni consecutive
+                           stop_criteria=["saturate_5"], #L'algoritmo si ferma se la fitness non cambia per 5 generazioni consecutive
                            allow_duplicate_genes=False, #Geni duplicati non ammessi
+                           suppress_warnings = True,
                            )
 
     # Avvio dell'ottimizzazione
