@@ -44,14 +44,20 @@ def getNumAgricoltori():
     num_agricoltori = cursor.fetchone() [0]
     return num_agricoltori
 
+def getnumProdotti(agricoltore_id, prodotto):
+    query = "SELECT COUNT(*) AS num_prod FROM prodotto WHERE id_agricoltore = %s AND nome = %s;"
+    cursor.execute(query, (agricoltore_id, prodotto,))
+    num_prodotti = cursor.fetchone() [0]
+    return num_prodotti
 def getFitness(id):
     return Agricoltore(id).fitness
 
 class Agricoltore:
-    def __init__(self, agricoltore_id):
+    def __init__(self, agricoltore_id, prodotto):
         self.id = agricoltore_id
         self.fitness = ((1.5*calcolanumOrdini(agricoltore_id)) +
                         (2*calcolanumCertificati(agricoltore_id)) +
                         (2*calcolamediaRecensioniAgr(agricoltore_id)) +
-                        (1.5*calcolamediaRecensioniPro(agricoltore_id))
+                        (1.5*calcolamediaRecensioniPro(agricoltore_id)) +
+                        (2*getnumProdotti(agricoltore_id,prodotto))
                         )

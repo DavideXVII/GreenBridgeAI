@@ -17,11 +17,14 @@ def fitness_func_wrapper(agricoltori):
 
 def main():
     #creazione array di agricoltori
+    nomeProdotto = "Radicchio"
     numAgricoltori = getNumAgricoltori()
     agricoltori = []
     for agricoltore_id in range (1, numAgricoltori + 1):
-        nuovoagricoltore = Agricoltore(agricoltore_id)
+        nuovoagricoltore = Agricoltore(agricoltore_id, nomeProdotto)
         agricoltori.append(nuovoagricoltore)
+    for agricoltore in agricoltori:
+        print(f"id: {agricoltore.id}, fitness: {agricoltore.fitness}")
     # Creazione della popolazione iniziale
     population_size = numAgricoltori
     ids = list(range(0, numAgricoltori))  # Genera una lista di numeri da 1 a 200
